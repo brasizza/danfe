@@ -71,6 +71,49 @@ class DanfePrinter {
     }
 
     bytes += generator.hr();
+    if (danfe?.dados?.pgto != null) {
+      for (MP pagamento in danfe!.dados!.pgto!.formas!) {
+        bytes += generator.row([
+          PosColumn(
+              text: pagamento.cMP ?? '',
+              width: 6,
+              styles: const PosStyles(
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+          PosColumn(
+              text: formatMoneyMilhar(pagamento.vMP ?? '', modeda: 'pt_BR', simbolo: r'R$'),
+              width: 6,
+              styles: const PosStyles(
+                align: PosAlign.right,
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+        ]);
+      }
+      bytes += generator.feed(1);
+
+      if ((danfe.dados?.pgto?.vTroco ?? '0.00') != '0.00') {
+        bytes += generator.row([
+          PosColumn(
+              text: 'Troco',
+              width: 6,
+              styles: const PosStyles(
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+          PosColumn(
+              text: formatMoneyMilhar(danfe.dados?.pgto?.vTroco ?? '', modeda: 'pt_BR', simbolo: r'R$'),
+              width: 6,
+              styles: const PosStyles(
+                align: PosAlign.right,
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+        ]);
+      }
+    }
+    bytes += generator.feed(1);
 
     bytes += generator.row([
       PosColumn(
@@ -89,6 +132,7 @@ class DanfePrinter {
             width: PosTextSize.size1,
           )),
     ]);
+
     bytes += generator.hr();
 
     bytes += generator.rawBytes([27, 97, 49]);
@@ -105,7 +149,7 @@ class DanfePrinter {
     bytes += generator.text('Emitida em: ' + dataEmissao, styles: const PosStyles(align: PosAlign.center));
     bytes += generator.feed(1);
     bytes += generator.rawBytes([27, 97, 49]);
-    bytes += generator.qrcode(danfe?.qrcodePrinter ?? '', size: QRSize.Size5, cor: QRCorrection.M);
+    bytes += generator.qrcode(danfe?.qrcodePrinter ?? '');
     bytes += generator.feed(1);
     bytes += generator.cut();
     bytes += generator.reset();

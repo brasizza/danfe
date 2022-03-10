@@ -169,11 +169,17 @@ class DadosDanfe {
   }
 
   factory DadosDanfe.fromMap(Map<String, dynamic> map) {
+    List<Det> _det = [];
+    if (map['det'].runtimeType.toString() != 'List<dynamic>') {
+      _det.add(Det.fromMap(map['det']));
+    } else {
+      _det.addAll(List<Det>.from(map['det']?.map((x) => Det.fromMap(x))));
+    }
     return DadosDanfe(
       ide: map['ide'] != null ? Ide.fromMap(map['ide']) : null,
       emit: map['emit'] != null ? Emit.fromMap(map['emit']) : null,
       dest: map['dest'] != null ? Dest.fromMap(map['dest']) : null,
-      det: map['det'] != null ? List<Det>.from(map['det']?.map((x) => Det.fromMap(x))) : null,
+      det: map['det'] != null ? _det : null,
       total: map['total'] != null ? Total.fromMap(map['total']) : null,
       pgto: (map['pgto'] != null || map['pag'] != null) ? Pgto.fromMap(map.containsKey('pgto') ? map['pgto'] : map['pag']) : null,
       infAdic: map['infAdic'] != null ? InfAdic.fromMap(map['infAdic']) : null,
@@ -440,17 +446,23 @@ class Prod {
 
 class Total {
   String? valorTotal;
-  Total({this.valorTotal});
+  String? desconto;
+  String? acrescimo;
+  Total({this.valorTotal, this.desconto, this.acrescimo});
 
   Map<String, dynamic> toMap() {
     return {
       'valorTotal': valorTotal,
+      'desconto': desconto,
+      'acrescimo': acrescimo,
     };
   }
 
   factory Total.fromMap(Map<String, dynamic> map) {
     return Total(
       valorTotal: (map.containsKey('vCFe') ? map['vCFe'] : map['ICMSTot']['vNF']),
+      desconto: (map.containsKey('vCFe') ? map['DescAcrEntr']['vDescSubtot'] : map['ICMSTot']['vDesc']),
+      acrescimo: (map.containsKey('vCFe') ? '0' : map['ICMSTot']['vOutro']),
     );
   }
 
@@ -562,8 +574,23 @@ class MP {
   }
 
   factory MP.fromMap(Map<String, dynamic> map) {
+    final Map<String, dynamic> formasPagamento = {
+      "10": "Vale Alimentação",
+      "11": "Vale Refeição",
+      "12": "Vale Presente",
+      "13": "Vale Combustível",
+      "14": "Duplicata Mercantil",
+      "15": "Boleto Bancário",
+      "90": "Sem Pagamento",
+      "99": "Outros",
+      "01": "Dinheiro",
+      "02": "Cheque",
+      "03": "Cartão de Crédito",
+      "04": "Cartão de Débito",
+      "05": "Crédito Loja",
+    };
     return MP(
-      cMP: (map.containsKey('cMP')) ? map['cMP'] : map['tPag'],
+      cMP: (map.containsKey('cMP')) ? formasPagamento[map['cMP']] : formasPagamento[map['tPag']],
       vMP: (map.containsKey('vMP')) ? map['vMP'] : map['vPag'],
     );
   }
