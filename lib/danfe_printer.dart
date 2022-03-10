@@ -73,7 +73,7 @@ class DanfePrinter {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
           PosColumn(text: det.prod?.xProd ?? '', width: (paperSize == PaperSize.mm58) ? 3 : 5),
-          PosColumn(text: formatNumber(det.prod?.qCom ?? '') + 'x', width: ((paperSize == PaperSize.mm58) ? 3 : 1), styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatNumber(det.prod?.qCom ?? ''), width: ((paperSize == PaperSize.mm58) ? 3 : 1), styles: const PosStyles(align: PosAlign.right)),
           PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3, styles: const PosStyles(align: PosAlign.right)),
           PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3, styles: const PosStyles(align: PosAlign.right)),
         ]);
