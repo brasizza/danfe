@@ -575,19 +575,19 @@ class MP {
 
   factory MP.fromMap(Map<String, dynamic> map) {
     final Map<String, dynamic> formasPagamento = {
-      "10": "Vale Alimentação",
-      "11": "Vale Refeição",
+      "10": "Vale Alimentacao",
+      "11": "Vale Refeicao",
       "12": "Vale Presente",
-      "13": "Vale Combustível",
+      "13": "Vale Combustivel",
       "14": "Duplicata Mercantil",
-      "15": "Boleto Bancário",
+      "15": "Boleto Bancario",
       "90": "Sem Pagamento",
       "99": "Outros",
       "01": "Dinheiro",
       "02": "Cheque",
-      "03": "Cartão de Crédito",
-      "04": "Cartão de Débito",
-      "05": "Crédito Loja",
+      "03": "Cartao de Credito",
+      "04": "Cartao de Debito",
+      "05": "Credito Loja",
     };
     return MP(
       cMP: (map.containsKey('cMP')) ? formasPagamento[map['cMP']] : formasPagamento[map['tPag']],

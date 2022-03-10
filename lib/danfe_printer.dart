@@ -91,7 +91,6 @@ class DanfePrinter {
               )),
         ]);
       }
-      bytes += generator.feed(1);
 
       if ((danfe.dados?.pgto?.vTroco ?? '0.00') != '0.00') {
         bytes += generator.row([
@@ -113,7 +112,6 @@ class DanfePrinter {
         ]);
       }
     }
-    bytes += generator.feed(1);
 
     bytes += generator.row([
       PosColumn(
