@@ -487,7 +487,7 @@ class Pgto {
     if (map.containsKey('MP')) {
       final List<MP> _listMP = [];
 
-      if (map['det'].runtimeType.toString() != 'List<dynamic>') {
+      if (map['MP'].runtimeType.toString() != 'List<dynamic>') {
         _listMP.add(MP.fromMap(map['MP']));
       } else {
         _listMP.addAll(List<MP>.from(map['MP']?.map((x) => MP.fromMap(x))));
