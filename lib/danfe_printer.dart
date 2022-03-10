@@ -1,12 +1,25 @@
 import 'package:danfe/danfe.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
+import 'package:intl/intl.dart';
 
 class DanfePrinter {
-  DanfePrinter._();
+  final PaperSize paperSize;
+  DanfePrinter(this.paperSize);
+  String formatMoneyMilhar(String number, {String modeda = '', String simbolo = ''}) {
+    NumberFormat formatter = NumberFormat.currency(decimalDigits: 2, name: modeda, symbol: simbolo);
+    return formatter.format(double.parse(number));
+  }
 
-  static Future<List<int>> bufferDanfe(Danfe? danfe, PaperSize sizePaper) async {
+  String formatNumber(String number) {
+    String result;
+    result = NumberFormat('###.##').format(double.parse(number));
+    return result;
+    // NumberFormat();
+  }
+
+  Future<List<int>> bufferDanfe(Danfe? danfe) async {
     final profile = await CapabilityProfile.load();
-    final generator = Generator(sizePaper, profile);
+    final generator = Generator(paperSize, profile);
     List<int> bytes = [];
     // Print image
     bytes += generator.rawBytes([27, 97, 49]);
@@ -27,16 +40,16 @@ class DanfePrinter {
       bytes += generator.text('Nota Fiscal Eletronica - NFC-E ',
           styles: const PosStyles(
             align: PosAlign.center,
-            height: PosTextSize.size2,
-            width: PosTextSize.size2,
+            height: PosTextSize.size1,
+            width: PosTextSize.size1,
           ),
           linesAfter: 1);
     }
 
-    bytes += generator.rawBytes([27, 97, 49]);
+    bytes += generator.rawBytes([27, 97, 48]);
     bytes += generator.text("CPF/CNPJ do consumidor: " + (danfe?.dados?.dest?.cpf ?? ''), styles: const PosStyles(align: PosAlign.left));
     bytes += generator.text("Nota : " + (danfe?.dados?.ide?.nNF ?? ''), styles: const PosStyles(align: PosAlign.left));
-
+    bytes += generator.feed(1);
     bytes += generator.row([
       PosColumn(text: 'DESCRICAO', width: 7),
       PosColumn(text: 'QTD', width: 1),
@@ -47,9 +60,9 @@ class DanfePrinter {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
           PosColumn(text: det.prod?.xProd ?? '', width: 7),
-          PosColumn(text: det.prod?.qCom ?? '', width: 1),
-          PosColumn(text: det.prod?.vUnCom ?? '', width: 2, styles: const PosStyles(align: PosAlign.right)),
-          PosColumn(text: det.prod?.vProd ?? '', width: 2, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.qCom ?? '', modeda: 'BRL', simbolo: r'R$'), width: 1),
+          PosColumn(text: formatNumber(det.prod?.vUnCom ?? ''), width: 2, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'BRL', simbolo: r'R$'), width: 2, styles: const PosStyles(align: PosAlign.right)),
         ]);
       }
     }
@@ -61,11 +74,11 @@ class DanfePrinter {
           text: 'TOTAL',
           width: 6,
           styles: const PosStyles(
-            height: PosTextSize.size2,
-            width: PosTextSize.size2,
+            height: PosTextSize.size1,
+            width: PosTextSize.size1,
           )),
       PosColumn(
-          text: danfe?.dados?.total?.valorTotal ?? '',
+          text: formatMoneyMilhar(danfe?.dados?.total?.valorTotal ?? ''),
           width: 6,
           styles: const PosStyles(
             align: PosAlign.right,
