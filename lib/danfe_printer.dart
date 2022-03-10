@@ -102,6 +102,26 @@ class DanfePrinter {
         ]);
       }
 
+      if ((danfe.dados?.total?.desconto ?? '0.00') != '0.00') {
+        bytes += generator.row([
+          PosColumn(
+              text: 'Desconto',
+              width: 6,
+              styles: const PosStyles(
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+          PosColumn(
+              text: formatMoneyMilhar(danfe.dados?.total?.desconto ?? '', modeda: 'pt_BR', simbolo: r'R$'),
+              width: 6,
+              styles: const PosStyles(
+                align: PosAlign.right,
+                height: PosTextSize.size1,
+                width: PosTextSize.size1,
+              )),
+        ]);
+      }
+
       if ((danfe.dados?.pgto?.vTroco ?? '0.00') != '0.00') {
         bytes += generator.row([
           PosColumn(
