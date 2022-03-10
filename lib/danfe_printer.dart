@@ -64,8 +64,8 @@ class DanfePrinter {
     bytes += generator.feed(1);
     bytes += generator.setStyles(const PosStyles(fontType: PosFontType.fontB));
     bytes += generator.row([
-      PosColumn(text: 'DESCRICAO', width: 5),
-      PosColumn(text: 'QTD', width: 1, styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'DESCRICAO', width: 4),
+      PosColumn(text: 'QTD', width: 2, styles: const PosStyles(align: PosAlign.right)),
       PosColumn(text: 'VLUN', width: 3, styles: const PosStyles(align: PosAlign.right)),
       PosColumn(text: 'VLTOT', width: 3, styles: const PosStyles(align: PosAlign.right)),
     ]);
