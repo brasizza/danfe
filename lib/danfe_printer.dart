@@ -53,18 +53,18 @@ class DanfePrinter {
     bytes += generator.text("Nota : " + (danfe?.dados?.ide?.nNF ?? ''), styles: const PosStyles(align: PosAlign.left));
     bytes += generator.feed(1);
     bytes += generator.row([
-      PosColumn(text: 'DESCRICAO', width: 7),
+      PosColumn(text: 'DESCRICAO', width: 5),
       PosColumn(text: 'QTD', width: 1),
-      PosColumn(text: 'VLUN', width: 2, styles: const PosStyles(align: PosAlign.right)),
-      PosColumn(text: 'VLTOT', width: 2, styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'VLUN', width: 3, styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'VLTOT', width: 3, styles: const PosStyles(align: PosAlign.right)),
     ]);
     if (danfe?.dados?.det != null) {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
-          PosColumn(text: det.prod?.xProd ?? '', width: 7),
+          PosColumn(text: det.prod?.xProd ?? '', width: 5),
           PosColumn(text: formatNumber(det.prod?.qCom ?? ''), width: 1),
-          PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 2),
-          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 2),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3),
         ]);
       }
     }
@@ -84,14 +84,24 @@ class DanfePrinter {
           width: 6,
           styles: const PosStyles(
             align: PosAlign.right,
-            height: PosTextSize.size2,
-            width: PosTextSize.size2,
+            height: PosTextSize.size1,
+            width: PosTextSize.size1,
           )),
     ]);
-    bytes += generator.qrcode(danfe?.qrcodePrinter ?? '');
-    bytes += generator.feed(1);
-    bytes += generator.hr(ch: '=', linesAfter: 1);
 
+    bytes += generator.rawBytes([27, 97, 49]);
+    bytes += generator.text('CHAVE DE ACESSO DA NOTA FISCAL ELETRONICA', styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text(danfe?.dados?.chaveNota ?? '', styles: const PosStyles(align: PosAlign.center));
+
+    bytes += generator.rawBytes([27, 97, 48]);
+    DateTime data = DateTime.now();
+
+    var outputFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+    String dataEmissao = outputFormat.format(data);
+    bytes += generator.text('Emitida em: ' + dataEmissao, styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.feed(1);
+    bytes += generator.qrcode(danfe?.qrcodePrinter ?? '', size: QRSize.Size5, cor: QRCorrection.M);
+    bytes += generator.feed(1);
     bytes += generator.cut();
 
     return bytes;

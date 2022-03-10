@@ -21,7 +21,8 @@ class Danfe {
 
   factory Danfe.fromMapSat(Map<String, dynamic> map) {
     Danfe _danfe = Danfe(dados: map['infCFe'] != null ? DadosDanfe.fromMap(map['infCFe']) : null, tipo: 'CFe');
-    String qrcode = (_danfe.dados?.chaveNota?.replaceAll('CFe', '') ?? '') + '|' + (_danfe.dados?.ide?.dEmi ?? '') + (_danfe.dados?.ide?.hEmi ?? '') + '|' + (_danfe.dados?.total?.valorTotal ?? '') + '|' + (_danfe.dados?.dest?.cpf ?? '') + '|' + (_danfe.dados?.ide?.assinaturaQRCODE ?? '');
+    // String qrcode = (_danfe.dados?.chaveNota?.replaceAll('CFe', '') ?? '') + '|' + (_danfe.dados?.ide?.dEmi ?? '') + (_danfe.dados?.ide?.hEmi ?? '') + '|' + (_danfe.dados?.total?.valorTotal ?? '') + '|' + (_danfe.dados?.dest?.cpf ?? '') + '|' + (_danfe.dados?.ide?.assinaturaQRCODE ?? '');
+    String qrcode = (_danfe.dados?.ide?.assinaturaQRCODE ?? '');
     _danfe.qrcodePrinter = qrcode.substring(100);
     return _danfe;
   }
@@ -176,7 +177,7 @@ class DadosDanfe {
       total: map['total'] != null ? Total.fromMap(map['total']) : null,
       pgto: (map['pgto'] != null || map['pag'] != null) ? Pgto.fromMap(map.containsKey('pgto') ? map['pgto'] : map['pag']) : null,
       infAdic: map['infAdic'] != null ? InfAdic.fromMap(map['infAdic']) : null,
-      chaveNota: map['_Id'],
+      chaveNota: (map['_Id'] as String).replaceAll('CFe', '').replaceAll('NFe', ''),
       sVersao: map['_versao'],
       sVersaoDadosEnt: map['_versaoDadosEnt'],
       sVersaoSB: map['_versaoSB'],
