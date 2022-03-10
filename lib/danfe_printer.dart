@@ -52,6 +52,7 @@ class DanfePrinter {
     bytes += generator.text("CPF/CNPJ do consumidor: " + (danfe?.dados?.dest?.cpf ?? ''), styles: const PosStyles(align: PosAlign.left));
     bytes += generator.text("Nota : " + (danfe?.dados?.ide?.nNF ?? ''), styles: const PosStyles(align: PosAlign.left));
     bytes += generator.feed(1);
+    bytes += generator.setStyles(const PosStyles(fontType: PosFontType.fontB));
     bytes += generator.row([
       PosColumn(text: 'DESCRICAO', width: 5),
       PosColumn(text: 'QTD', width: 1, styles: const PosStyles(align: PosAlign.right)),
@@ -131,7 +132,7 @@ class DanfePrinter {
     ]);
 
     bytes += generator.hr();
-
+    bytes += generator.setStyles(const PosStyles(fontType: PosFontType.fontA));
     bytes += generator.rawBytes([27, 97, 49]);
     bytes += generator.text('CHAVE DE ACESSO DA NOTA FISCAL ELETRONICA', styles: const PosStyles(align: PosAlign.center));
     bytes += generator.feed(1);
