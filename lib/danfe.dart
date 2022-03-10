@@ -1,4 +1,4 @@
-library danfe;
+library danfe_parser;
 
 import 'dart:convert';
 import 'package:xml2json/xml2json.dart';
