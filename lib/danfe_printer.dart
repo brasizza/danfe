@@ -27,7 +27,6 @@ class DanfePrinter {
     bytes += generator.text(danfe?.dados?.emit?.xFant ?? '',
         styles: const PosStyles(
           align: PosAlign.center,
-          fontType: PosFontType.fontB,
           height: PosTextSize.size2,
           width: PosTextSize.size2,
         ));
