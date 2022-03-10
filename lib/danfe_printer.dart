@@ -165,10 +165,8 @@ class DanfePrinter {
     bytes += generator.setStyles(const PosStyles(fontType: PosFontType.fontA));
     bytes += generator.rawBytes([27, 97, 49]);
     bytes += generator.text('CHAVE DE ACESSO DA NOTA FISCAL', styles: const PosStyles(align: PosAlign.center));
-    bytes += generator.feed(1);
 
     bytes += generator.text(splitByLength(danfe?.dados?.chaveNota ?? '', 4, ' '), styles: const PosStyles(align: PosAlign.center, bold: true));
-    bytes += generator.feed(1);
 
     DateTime data = DateTime.now();
     bytes += generator.rawBytes([27, 97, 48]);
