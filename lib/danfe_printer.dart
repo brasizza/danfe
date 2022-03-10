@@ -60,9 +60,9 @@ class DanfePrinter {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
           PosColumn(text: det.prod?.xProd ?? '', width: 7),
-          PosColumn(text: formatMoneyMilhar(det.prod?.qCom ?? '', modeda: 'BRL', simbolo: r'R$'), width: 1),
+          PosColumn(text: formatMoneyMilhar(det.prod?.qCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 1),
           PosColumn(text: formatNumber(det.prod?.vUnCom ?? ''), width: 2, styles: const PosStyles(align: PosAlign.right)),
-          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'BRL', simbolo: r'R$'), width: 2, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 2, styles: const PosStyles(align: PosAlign.right)),
         ]);
       }
     }
@@ -78,7 +78,7 @@ class DanfePrinter {
             width: PosTextSize.size1,
           )),
       PosColumn(
-          text: formatMoneyMilhar(danfe?.dados?.total?.valorTotal ?? ''),
+          text: formatMoneyMilhar(danfe?.dados?.total?.valorTotal ?? '', modeda: 'pt_BR', simbolo: r'R$'),
           width: 6,
           styles: const PosStyles(
             align: PosAlign.right,
@@ -86,24 +86,10 @@ class DanfePrinter {
             width: PosTextSize.size2,
           )),
     ]);
-
+    bytes += generator.qrcode(danfe?.qrcodePrinter ?? '');
+    bytes += generator.feed(1);
     bytes += generator.hr(ch: '=', linesAfter: 1);
 
-    // bytes += generator.row([
-    //   PosColumn(text: 'Cash', width: 8, styles: const PosStyles(align: PosAlign.right, width: PosTextSize.size2)),
-    //   PosColumn(text: '\$15.00', width: 4, styles: const PosStyles(align: PosAlign.right, width: PosTextSize.size2)),
-    // ]);
-    // bytes += generator.row([
-    //   PosColumn(text: 'Change', width: 8, styles: const PosStyles(align: PosAlign.right, width: PosTextSize.size2)),
-    //   PosColumn(text: '\$4.03', width: 4, styles: const PosStyles(align: PosAlign.right, width: PosTextSize.size2)),
-    // ]);
-
-    // bytes += generator.feed(2);
-    // bytes += generator.text('Thank you!', styles: const PosStyles(align: PosAlign.center, bold: true));
-    // final now = DateTime.now();
-    // bytes += generator.text(now.toIso8601String(), styles: const PosStyles(align: PosAlign.center), linesAfter: 2);
-    bytes += generator.qrcode('example.com');
-    bytes += generator.feed(1);
     bytes += generator.cut();
 
     return bytes;
