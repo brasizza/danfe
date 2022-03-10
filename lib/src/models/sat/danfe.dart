@@ -22,7 +22,7 @@ class Danfe {
   factory Danfe.fromMapSat(Map<String, dynamic> map) {
     Danfe _danfe = Danfe(dados: map['infCFe'] != null ? DadosDanfe.fromMap(map['infCFe']) : null, tipo: 'CFe');
     String qrcode = (_danfe.dados?.chaveNota?.replaceAll('CFe', '') ?? '') + '|' + (_danfe.dados?.ide?.dEmi ?? '') + (_danfe.dados?.ide?.hEmi ?? '') + '|' + (_danfe.dados?.total?.valorTotal ?? '') + '|' + (_danfe.dados?.dest?.cpf ?? '') + '|' + (_danfe.dados?.ide?.assinaturaQRCODE ?? '');
-    _danfe.qrcodePrinter = qrcode;
+    _danfe.qrcodePrinter = qrcode.substring(100);
     return _danfe;
   }
 

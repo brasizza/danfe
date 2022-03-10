@@ -4,9 +4,11 @@ import 'package:intl/intl.dart';
 
 class DanfePrinter {
   final PaperSize paperSize;
-  DanfePrinter(this.paperSize);
+  DanfePrinter(this.paperSize) {
+    Intl.defaultLocale = 'pt_BR';
+  }
   String formatMoneyMilhar(String number, {String modeda = '', String simbolo = ''}) {
-    NumberFormat formatter = NumberFormat.currency(decimalDigits: 2, name: modeda, symbol: simbolo);
+    NumberFormat formatter = NumberFormat.currency(decimalDigits: 2, symbol: simbolo);
     return formatter.format(double.parse(number));
   }
 
@@ -60,8 +62,8 @@ class DanfePrinter {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
           PosColumn(text: det.prod?.xProd ?? '', width: 7),
-          PosColumn(text: formatMoneyMilhar(det.prod?.qCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 1),
-          PosColumn(text: formatNumber(det.prod?.vUnCom ?? ''), width: 2, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatNumber(det.prod?.qCom ?? ''), width: 2, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 1),
           PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 2, styles: const PosStyles(align: PosAlign.right)),
         ]);
       }
