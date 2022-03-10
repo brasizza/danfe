@@ -31,7 +31,9 @@ class DanfePrinter {
           height: PosTextSize.size2,
           width: PosTextSize.size2,
         ));
-    bytes += generator.text((danfe?.dados?.emit?.cNPJ ?? ''), styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.feed(1);
+
+    bytes += generator.text((danfe?.dados?.emit?.cnpj ?? ''), styles: const PosStyles(align: PosAlign.center));
     bytes += generator.text((danfe?.dados?.emit?.enderEmit?.xLgr ?? '') + ', ' + ((danfe?.dados?.emit?.enderEmit?.nro ?? '')), styles: const PosStyles(align: PosAlign.center));
     bytes += generator.hr();
     if ((danfe?.tipo ?? 'CFe') == 'CFe') {

@@ -301,7 +301,7 @@ class EnderEmit {
 }
 
 class Emit {
-  String? cNPJ;
+  String? cnpj;
   String? xNome;
   String? xFant;
   String? iE;
@@ -309,11 +309,11 @@ class Emit {
   String? cRegTrib;
   String? indRatISSQN;
   EnderEmit? enderEmit;
-  Emit({this.cNPJ, this.xNome, this.xFant, this.iE, this.iM, this.cRegTrib, this.indRatISSQN, this.enderEmit});
+  Emit({this.cnpj, this.xNome, this.xFant, this.iE, this.iM, this.cRegTrib, this.indRatISSQN, this.enderEmit});
 
   Map<String, dynamic> toMap() {
     return {
-      'cNPJ': cNPJ,
+      'cnpj': cnpj,
       'xNome': xNome,
       'xFant': xFant,
       'iE': iE,
@@ -326,7 +326,7 @@ class Emit {
 
   factory Emit.fromMap(Map<String, dynamic> map) {
     return Emit(
-      cNPJ: map['CNPJ'],
+      cnpj: map['CNPJ'],
       xNome: map['xNome'],
       xFant: map['xFant'],
       iE: map['IE'],
