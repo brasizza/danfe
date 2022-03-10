@@ -1,10 +1,9 @@
 library danfe;
 
 import 'dart:convert';
-
 import 'package:xml2json/xml2json.dart';
-
 import 'src/models/sat/danfe.dart';
+export 'src/models/sat/danfe.dart';
 
 class DanfeParser {
   static Danfe? parseDanfe(String xml) {
