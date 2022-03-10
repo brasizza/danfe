@@ -158,6 +158,11 @@ class DanfePrinter {
     bytes += generator.feed(1);
     bytes += generator.rawBytes([27, 97, 49]);
     bytes += generator.qrcode(danfe?.qrcodePrinter ?? '');
+    bytes += generator.rawBytes([27, 97, 48]);
+    if (danfe?.dados?.infAdic?.infCpl != null) {
+      bytes += generator.text(danfe!.dados!.infAdic!.infCpl ?? ' ', styles: const PosStyles(align: PosAlign.center));
+    }
+
     bytes += generator.feed(1);
     bytes += generator.cut();
     bytes += generator.reset();
