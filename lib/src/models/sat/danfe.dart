@@ -485,8 +485,15 @@ class Pgto {
 
   factory Pgto.fromMap(Map<String, dynamic> map) {
     if (map.containsKey('MP')) {
+      final List<MP> _listMP = [];
+
+      if (map['det'].runtimeType.toString() != 'List<dynamic>') {
+        _listMP.add(MP.fromMap(map['MP']));
+      } else {
+        _listMP.addAll(List<MP>.from(map['MP']?.map((x) => MP.fromMap(x))));
+      }
       return Pgto(
-        formas: map['MP'] != null ? List<MP>.from(map['MP']?.map((x) => MP.fromMap(x))) : null,
+        formas: map['MP'] != null ? _listMP : null,
         vTroco: map['vTroco'],
       );
     } else if (map.containsKey('detPag')) {
