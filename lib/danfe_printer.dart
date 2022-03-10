@@ -4,7 +4,7 @@ import 'package:esc_pos_utils/esc_pos_utils.dart';
 class DanfePrinter {
   DanfePrinter._();
 
-  static Future<void> bufferDanfe(Danfe? danfe, PaperSize sizePaper) async {
+  static Future<List<int>> bufferDanfe(Danfe? danfe, PaperSize sizePaper) async {
     final profile = await CapabilityProfile.load();
     final generator = Generator(sizePaper, profile);
     List<int> bytes = [];
@@ -93,5 +93,7 @@ class DanfePrinter {
     bytes += generator.qrcode('example.com');
     bytes += generator.feed(1);
     bytes += generator.cut();
+
+    return bytes;
   }
 }
