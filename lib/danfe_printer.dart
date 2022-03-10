@@ -4,11 +4,9 @@ import 'package:intl/intl.dart';
 
 class DanfePrinter {
   final PaperSize paperSize;
-  DanfePrinter(this.paperSize) {
-    Intl.defaultLocale = 'pt_BR';
-  }
+  DanfePrinter(this.paperSize) {}
   String formatMoneyMilhar(String number, {String modeda = '', String simbolo = ''}) {
-    NumberFormat formatter = NumberFormat.currency(decimalDigits: 2, symbol: simbolo);
+    NumberFormat formatter = NumberFormat.currency(decimalDigits: 2, locale: modeda, symbol: simbolo);
     return formatter.format(double.parse(number));
   }
 
