@@ -138,12 +138,12 @@ class DadosDanfe {
   Total? total;
   Pgto? pgto;
   InfAdic? infAdic;
-  String? sId;
+  String? chaveNota;
   String? sVersao;
   String? sVersaoDadosEnt;
   String? sVersaoSB;
 
-  DadosDanfe({this.ide, this.emit, this.dest, this.det, this.total, this.pgto, this.infAdic, this.sId, this.sVersao, this.sVersaoDadosEnt, this.sVersaoSB});
+  DadosDanfe({this.ide, this.emit, this.dest, this.det, this.total, this.pgto, this.infAdic, this.chaveNota, this.sVersao, this.sVersaoDadosEnt, this.sVersaoSB});
 
   Map<String, dynamic> toMap() {
     return {
@@ -154,7 +154,7 @@ class DadosDanfe {
       'total': total?.toMap(),
       'pgto': pgto?.toMap(),
       'infAdic': infAdic?.toMap(),
-      'sId': sId,
+      'chaveNota': chaveNota,
       'sVersao': sVersao,
       'sVersaoDadosEnt': sVersaoDadosEnt,
       'sVersaoSB': sVersaoSB,
@@ -170,7 +170,7 @@ class DadosDanfe {
       total: map['total'] != null ? Total.fromMap(map['total']) : null,
       pgto: (map['pgto'] != null || map['pag'] != null) ? Pgto.fromMap(map.containsKey('pgto') ? map['pgto'] : map['pag']) : null,
       infAdic: map['infAdic'] != null ? InfAdic.fromMap(map['infAdic']) : null,
-      sId: map['_Id'],
+      chaveNota: map['_Id'],
       sVersao: map['_versao'],
       sVersaoDadosEnt: map['_versaoDadosEnt'],
       sVersaoSB: map['_versaoSB'],
