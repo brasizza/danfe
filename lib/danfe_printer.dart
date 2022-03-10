@@ -64,18 +64,18 @@ class DanfePrinter {
     bytes += generator.feed(1);
     bytes += generator.setStyles(const PosStyles(fontType: PosFontType.fontB));
     bytes += generator.row([
-      PosColumn(text: 'DESCRICAO', width: 4),
-      PosColumn(text: 'QTD', width: 2, styles: const PosStyles(align: PosAlign.right)),
-      PosColumn(text: 'VLUN', width: 3, styles: const PosStyles(align: PosAlign.right)),
-      PosColumn(text: 'VLTOT', width: 3, styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'DESCRICAO'),
+      PosColumn(text: 'QTD', styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'VLUN', styles: const PosStyles(align: PosAlign.right)),
+      PosColumn(text: 'VLTOT', styles: const PosStyles(align: PosAlign.right)),
     ]);
     if (danfe?.dados?.det != null) {
       for (Det det in danfe!.dados!.det!) {
         bytes += generator.row([
-          PosColumn(text: det.prod?.xProd ?? '', width: 5),
-          PosColumn(text: formatNumber(det.prod?.qCom ?? '') + 'x', width: 1, styles: const PosStyles(align: PosAlign.right)),
-          PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3, styles: const PosStyles(align: PosAlign.right)),
-          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), width: 3, styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: det.prod?.xProd ?? ''),
+          PosColumn(text: formatNumber(det.prod?.qCom ?? '') + 'x', styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vUnCom ?? '', modeda: 'pt_BR', simbolo: r'R$'), styles: const PosStyles(align: PosAlign.right)),
+          PosColumn(text: formatMoneyMilhar(det.prod?.vProd ?? '', modeda: 'pt_BR', simbolo: r'R$'), styles: const PosStyles(align: PosAlign.right)),
         ]);
       }
     }
