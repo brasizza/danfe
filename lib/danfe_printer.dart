@@ -27,17 +27,6 @@ class DanfePrinter {
     return pieces.join(glue);
   }
 
-  static List<int> strintToListInt(String? dado) {
-    List<int> listData = [];
-    if (dado != null) {
-      for (int i = 0; i < dado.length; i++) {
-        listData.add(int.parse(dado[i]));
-      }
-    }
-
-    return listData;
-  }
-
   Future<List<int>> bufferDanfe(Danfe? danfe) async {
     final profile = await CapabilityProfile.load();
     final generator = Generator(paperSize, profile);
@@ -162,18 +151,12 @@ class DanfePrinter {
     bytes += generator.feed(1);
 
     DateTime data = DateTime.now();
-    bytes += generator.rawBytes([27, 97, 49]);
+    bytes += generator.rawBytes([27, 97, 48]);
     var outputFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     String dataEmissao = outputFormat.format(data);
     bytes += generator.text('Emitida em: ' + dataEmissao, styles: const PosStyles(align: PosAlign.center));
     bytes += generator.feed(1);
-    bytes += generator.barcode(
-      Barcode.code39(
-        strintToListInt(danfe?.dados?.chaveNota ?? ''),
-      ),
-      align: PosAlign.center,
-      textPos: BarcodeText.none,
-    );
+    bytes += generator.rawBytes([27, 97, 49]);
     bytes += generator.qrcode(danfe?.qrcodePrinter ?? '');
     bytes += generator.feed(1);
     bytes += generator.cut();
