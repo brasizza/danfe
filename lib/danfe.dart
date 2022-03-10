@@ -6,6 +6,7 @@ import 'src/models/sat/danfe.dart';
 export 'src/models/sat/danfe.dart';
 
 class DanfeParser {
+  DanfeParser._();
   static Danfe? parseDanfe(String xml) {
     final myTransformer = Xml2Json();
     myTransformer.parse(xml);
